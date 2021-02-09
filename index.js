@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const routes = require("/routes.js")
+const routes = require("./routes")
 
 const app = express()
 
@@ -14,7 +14,8 @@ router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now())
   next()
 })
-app.use("/routes", routes)
+
+app.use("/", routes)
 
 
 app.listen(PORT, () => console.log('Server started on port 3000'))
