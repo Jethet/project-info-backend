@@ -1,6 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const routes = require("./routes")
+const { Pool } = require("pg")
+require("dotenv").config();
+
+const pool = new Pool({
+  user: PGUSER,
+  host: "localhost",
+  database: "info_inspiration",
+  password: PGPASSWORD,
+  port: 5432,
+});
+
 
 const app = express()
 
