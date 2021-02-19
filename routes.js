@@ -18,7 +18,7 @@ router.get("/", function (req, res) {
 
 router.get("/overview", function (req, res) {
   pool
-    .query("SELECT * FROM info_cards")
+    .query("SELECT * FROM info_cards;")
     .then((result) => res.json(result.rows))
     .catch((e) => console.error(e));
 });
