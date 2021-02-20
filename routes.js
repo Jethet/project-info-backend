@@ -39,7 +39,7 @@ router.post("/create", function (req, res) {
 
   pool
   .query("INSERT INTO info_cards (card_title, card_content, card_tag) VALUES ($1, $2, $3);", [card_title, card_content, card_tag ])
-  .then(() => res.send("New item created."))
+  .then(() => res.send(`New item ${card_title} has been created.`))
   .catch((e) => console.error(e))
 });
 
