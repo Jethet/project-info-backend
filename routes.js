@@ -33,7 +33,14 @@ router.get("/search/:tag", function (req, res) {
 });
 
 router.post("/create", function (req, res) {
-  res.send("New item created.");
+  const card_title = req.body.card_title
+  const card_content = req.body.card_content
+  const card_tag = req.body.card_tag
+
+  pool
+  .query("INSERT INTO info_cards (card_title, card_content, card_tag) VALUES ($1, $2, $3);", [card_title, card_content, card_tag ])
+  .then(() => res.send("New item created."))
+  .catch((e) => console.error(e))
 });
 
 router.put("/edit", function (req, res) {
