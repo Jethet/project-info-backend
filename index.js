@@ -1,10 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const routes = require("./routes")
-const { Pool } = require("pg")
 require("dotenv").config();
-
-
 
 const app = express()
 
