@@ -7,21 +7,9 @@ const db = {};
 
 const app = express();
 
-// Request with key to get value from database:
-app.get("/get/:key", (req, res) => {
-  res.json({ todo: true });
-});
+app.use(express.json());
 
-// Check the keys in the databases:
-app.get("/dbinfo", (req, res) => {
-  const dbKeysCount = Object.keys(db).length
-  const info = {
-    size: dbKeysCount
-  }
-  res.json(info);
-});
-
-// give the server a URL to listen to:
+// give the server a URL to listen to
 app.get("/", (req, res) => {
   // request is the object the server receives
   // response is the object that needs to be populated to send back to the browser/client
@@ -31,6 +19,37 @@ app.get("/", (req, res) => {
     appName: process.env.npm_package_name,
     appVersion: process.env.npm_package_version,
   });
+});
+
+// JSON body post to populate database
+app.post("/set", (req, res) => {
+  // get values from the request body in JSON format
+  db[req.body.key] = req.body.value;
+  res.status(201).json({
+    status: "OK",
+  });
+});
+
+// Request with key to get value from database
+app.get("/get/:key", (req, res) => {
+  // When there is a request with a key, the key is looked up in the database
+  // and whatever is stored under that key is sent back
+  res.json({ value: db[req.params.key] });
+});
+
+// Check the keys in the databases
+app.get("/dbinfo", (req, res) => {
+  const dbKeys = Object.keys(db);
+  const dbKeysCount = dbKeys.length;
+  const info = {
+    size: dbKeysCount,
+  };
+  // Query is the part of the URL after the ?
+  if ((req.query.details = "true")) {
+    // Get all the keys that are in the database and show the values
+    info.keys = dbKeys;
+  }
+  res.json(info);
 });
 
 app.listen(PORT, () => {
