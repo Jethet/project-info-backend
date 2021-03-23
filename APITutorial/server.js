@@ -33,16 +33,16 @@ app.post("/set", (req, res) => {
 // Request with key to get value from database
 app.get("/get/:key", (req, res) => {
   // When there is a request with a key, the key is looked up in the database
-  // and whatever is stored under that key is sent back
+  // and whatever value is stored under that key is sent back together with the key
   res.json({ value: db[req.params.key] });
 });
 
 // Check the keys in the databases
 app.get("/dbinfo", (req, res) => {
   const dbKeys = Object.keys(db);
-  const dbKeysCount = dbKeys.length;
+  const dbKeyCount = dbKeys.length;
   const info = {
-    size: dbKeysCount,
+    size: dbKeyCount,
   };
   // Query is the part of the URL after the ?
   if ((req.query.details = "true")) {
